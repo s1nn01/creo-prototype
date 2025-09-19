@@ -264,18 +264,34 @@ function About() {
           <p className="text-gray-700 mb-4">
             We are an enterprise technology consulting and recruitment partner helping organizations modernize platforms and build high-performing teams.
           </p>
-          <p className="text-gray-700">
-            Our multi-lingual consultants bring unmatched expertise and cultural understanding,
-            enabling us to deliver tailored services in Salesforce, SAP, Microsoft, Oracle, Cloud, Cyber Security, and more.
-          </p>
+          <p className="text-gray-700 mb-4">
+        Our specialist areas include Microsoft, CRM, BI &amp; Big Data, Development, Infrastructure &amp; Cloud, and Cyber Security.
+      </p>
+      <p className="text-gray-700 mb-4">
+        We have developed an unrivaled network and reputation, working with leading experts and companies across the globe. This is thanks to our teams of
+        multi-lingual consultants who understand the culture of each market we operate in. We have headquarters in London.
+      </p>
+      <p className="text-gray-700 mb-4">
+        Whether you are a candidate seeking the best roles in Europe or a client looking for the best enterprise technology professionals, you can expect a
+        market-leading service delivered by passionate, open, and entrepreneurial people. Specialism, quality, and compliance are at the heart of everything
+        we do to establish and nurture long-term relationships with our clients and candidates.
+      </p>
+
+      <h3 className="text-xl font-semibold mt-8 mb-2">Staffing Services</h3>
+      <p className="text-gray-700 mb-4">
+        At Creo, we provide the best staffing services on the planet. Our expert knowledge, coupled with our open, transparent, and entrepreneurial approach
+        has ensured our continuing success in building long-term partnerships with multinational blue-chips, SMEs, and global or specialist IT consultancies.
+        Our highly-experienced recruitment consultants are proficient in their individual technology market, and work with a network of global IT
+        professionals to ensure we always meet our clients’ needs.
+      </p>
+
+      <h3 className="text-xl font-semibold mt-8 mb-2">Pega Services</h3>
+      <p className="text-gray-700">
+        At Creo, we provide the best Pega services and resources. Creo Invent builds innovative, modern, and mobile-enabled apps quickly with Pega’s low-code
+        platform. Our solutions integrate with external systems and provide enterprise-grade security and scalability. Our teams bring deep knowledge of Pega
+        Program Management, Business Analysis, Agile Development, and Data Management.
+      </p>
         </div>
-        <Image
-          src="/about-team.jpg"
-          alt="Teamwork at Creo Invent"
-          width={600}
-          height={400}
-          className="rounded-2xl shadow-lg object-cover"
-        />
       </section>
 
       {/* Focus Areas */}
