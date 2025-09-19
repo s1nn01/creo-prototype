@@ -10,7 +10,6 @@ import {
   Users,
   Rocket,
   Globe,
-  FileText,
   PhoneCall,
   ChevronRight,
   Building2,
@@ -392,7 +391,7 @@ function TalentNetwork() {
       }
 
       setSubmitted(true);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.message || "Something went wrong.");
     } finally {
       setLoading(false);
@@ -405,7 +404,7 @@ function TalentNetwork() {
         <div className="mx-auto w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mb-4">
           <CheckCircle2 className="w-7 h-7 text-green-600" />
         </div>
-        <h1 className="text-2xl font-bold mb-2">You're in! 🎉</h1>
+        <h1 className="text-2xl font-bold mb-2">You’re in! 🎉</h1>
         <p className="text-gray-600">We’ll notify you when roles match your skills and preferences. You can update your alerts anytime.</p>
       </div>
     );
@@ -562,10 +561,19 @@ function Contact() {
 export default function PrototypeApp() {
   const { route, navigate } = useRouter();
 
-  // Optional: external navigate trigger (used in Contact card above)
-  if (typeof window !== "undefined") {
-    window.addEventListener("navigate", (e: any) => navigate(e.detail));
+  declare global {
+    interface WindowEventMap {
+      // our custom DOM event carries a string route in detail
+      navigate: CustomEvent<string>;
+    }
   }
+  
+  if (typeof window !== "undefined") {
+    window.addEventListener("navigate", (e: CustomEvent<string>) => {
+      navigate(e.detail);
+    });
+  }
+  
 
   const Page = () => {
     switch (route) {

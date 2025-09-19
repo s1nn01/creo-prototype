@@ -35,6 +35,9 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await cv.arrayBuffer();
     const cvBuffer = Buffer.from(arrayBuffer);
 
+    const cvName = cv.name || "cv";
+    const cvType = cv.type || "application/octet-stream";
+
     // Build email body (plain text)
     const text = `
 New Talent Network submission
@@ -78,7 +81,7 @@ Seniority: ${seniority}
     });
 
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Talent POST error:", err);
     return new Response(JSON.stringify({ message: err?.message || "Internal error" }), { status: 500 });
   }
