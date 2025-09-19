@@ -379,21 +379,6 @@ function Services() {
   );
 }
 
-function Technologies() {
-  const logos = ["Salesforce", "SAP", "Microsoft", "Oracle","Pega","AWS", "Azure", "GCP", "Snowflake", "Power BI"];
-  return (
-    <div className="py-16 px-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Technologies</h1>
-      <p className="text-gray-600 mb-8">Certified expertise and delivery accelerators across leading platforms.</p>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {logos.map((l) => (
-          <div key={l} className="rounded-xl border bg-white p-6 text-center text-gray-700 font-medium">{l}</div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Cases() {
   const items = [
     { client: "FinServ Co.", outcome: "+38% lead conversion", blurb: "Migrated CRM to Salesforce with custom CPQ." },
@@ -700,8 +685,6 @@ export default function PrototypeApp() {
         return <About />;
       case "/services":
         return <Services />;
-      case "/technologies":
-        return <Technologies />;
       case "/cases":
         return <Cases />;
       case "/careers":
