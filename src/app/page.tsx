@@ -46,10 +46,10 @@ function NavBar({ navigate, route }: { navigate: (p: string) => void; route: str
   return (
     <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
-        <div className="flex items-center gap-2">
-          <Globe className="w-6 h-6 text-blue-600" />
-          <span className="font-bold text-lg">Creo Invent Tech</span>
-        </div>
+      <div className="flex items-center gap-3">
+      <img src="/creo-logo.png" alt="Creo Invent Tech" className="h-8 w-auto" />
+      <span className="font-bold text-lg text-pink-700">Creo Invent Tech</span>
+      </div>
         <nav className="hidden md:flex gap-6">
           {links.map((l) => (
             <button
@@ -548,8 +548,10 @@ function Contact() {
           <h3 className="font-semibold mb-2">Global Offices</h3>
           <p className="text-sm text-gray-700">UK • India • South Africa • USA</p>
           <div className="mt-4 space-y-2 text-sm text-gray-600">
-            <p className="flex items-center gap-2"><Mail className="w-4 h-4"/> info@creoinvent-tech.com</p>
-            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +44 0000 000000</p>
+            <p className="flex items-center gap-2"><Mail className="w-4 h-4"/> chandras@creoinvent-tech.com</p>
+            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7425392138</p>
+            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +27 718755180</p>
+            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7930624958</p>
           </div>
           <div className="mt-6 rounded-xl border bg-white p-4">
             <p className="text-sm font-medium mb-2">Candidates</p>
