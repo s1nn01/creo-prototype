@@ -392,7 +392,13 @@ function TalentNetwork() {
 
       setSubmitted(true);
     } catch (err: unknown) {
-      setError(err?.message || "Something went wrong.");
+      const msg =
+        err instanceof Error
+          ? err.message
+          : typeof err === "string"
+          ? err
+          : "Something went wrong.";
+      setError(msg);
     } finally {
       setLoading(false);
     }
