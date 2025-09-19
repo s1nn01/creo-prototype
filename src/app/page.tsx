@@ -56,8 +56,6 @@ function NavBar({ navigate, route }: { navigate: (p: string) => void; route: str
         priority
         className="h-12 md:h-14 w-auto"   // 48px tall on mobile, 56px on desktop
       />
-
-      <span className="hidden md:inline-block font-bold text-xl md:text-2xl text-pink-700 whitespace-nowrap">Creo Invent Tech</span>
       </div>
         <nav className="hidden md:flex gap-6">
           {links.map((l) => (
@@ -83,18 +81,26 @@ function NavBar({ navigate, route }: { navigate: (p: string) => void; route: str
 
 function Hero({ navigate }: { navigate: (p: string) => void }) {
   return (
-    <section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-24 px-6 text-center">
-      <motion.h1
+    <section className="relative bg-gradient-to-r fuchsia-600 to-amber-500 text-white py-24 px-6 text-center">
+      {/* Company name first, big and bold */}
+      <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-3">
+        CREO INVENT
+      </h1>
+
+      {/* Headline goes UNDER the company name */}
+      <motion.h2
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-4xl md:text-6xl font-bold mb-6"
+        className="text-3xl md:text-5xl font-bold mb-6"
       >
         Powering Global Talent & Technology Solutions
-      </motion.h1>
+      </motion.h2>
+
       <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8">
-        We connect enterprises with top talent and deliver outcome‑driven consulting across Salesforce, SAP, Microsoft, and more.
+        We connect enterprises with top talent and deliver outcome-driven consulting across Salesforce, SAP, Microsoft, and more.
       </p>
+
       <div className="flex items-center justify-center gap-3">
         <Button size="lg" className="rounded-2xl shadow-lg" onClick={() => navigate("/services")}>
           Explore Services <ChevronRight className="ml-2 w-4 h-4" />
@@ -106,6 +112,7 @@ function Hero({ navigate }: { navigate: (p: string) => void }) {
     </section>
   );
 }
+
 
 function Stats() {
   const stats = [
@@ -201,8 +208,10 @@ function Footer() {
         </div>
         <div>
           <p className="font-medium mb-2">Contact</p>
-          <p className="text-sm text-gray-400 flex items-center gap-2"><Mail className="w-4 h-4"/> info@creoinvent-tech.com</p>
-          <p className="text-sm text-gray-400 flex items-center gap-2"><Phone className="w-4 h-4"/> +44 0000 000000</p>
+          <p className="text-sm text-gray-400 flex items-center gap-2"><Mail className="w-4 h-4"/> chandras@creoinvent-tech.com</p>
+          <p className="text-sm text-gray-400 flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7930624958</p>
+          <p className="text-sm text-gray-400 flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7425392138</p>
+          <p className="text-sm text-gray-400 flex items-center gap-2"><Phone className="w-4 h-4"/> +27 718755180</p>
         </div>
       </div>
     </footer>
