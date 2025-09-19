@@ -81,7 +81,7 @@ function NavBar({ navigate, route }: { navigate: (p: string) => void; route: str
 
 function Hero({ navigate }: { navigate: (p: string) => void }) {
   return (
-    <section className="relative bg-gradient-to-r fuchsia-600 to-amber-500 text-white py-24 px-6 text-center">
+    <section className="relative bg-gradient-to-r from-pink-600 via-indigo-600 to-amber-500 text-white py-24 px-6 text-center">
       {/* Company name first, big and bold */}
       <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-3">
         CREO INVENT
@@ -176,7 +176,7 @@ function ServicesGrid({ navigate }: { navigate: (p: string) => void }) {
 
 function CTA({ navigate }: { navigate: (p: string) => void }) {
   return (
-    <section className="bg-gradient-to-r from-indigo-700 to-blue-600 text-white py-16 px-6 text-center">
+    <section className="bg-gradient-to-r from-pink-600 via-indigo-600 to-amber-500 text-white py-16 px-6 text-center">
       <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Business?</h2>
       <p className="max-w-xl mx-auto mb-6 text-lg">
         Whether you need enterprise solutions or top‑tier talent, we’re here to help you succeed.
@@ -355,7 +355,7 @@ function Careers({ navigate }: { navigate: (p: string) => void }) {
 
 function TalentTeaser({ navigate }: { navigate: (p: string) => void }) {
   return (
-    <section className="rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 flex flex-col md:flex-row items-center justify-between">
+    <section className="rounded-2xl bg-gradient-to-r from-pink-600 via-indigo-600 to-amber-500 text-white p-8 flex flex-col md:flex-row items-center justify-between">
       <div className="mb-4 md:mb-0">
         <h3 className="text-2xl font-bold">Get matched to roles that fit your CV</h3>
         <p className="text-white/90">Join our Talent Network to receive job alerts tailored to your skills and location.</p>
