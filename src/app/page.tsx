@@ -232,26 +232,71 @@ function Home({ navigate }: { navigate: (p: string) => void }) {
 }
 
 function About() {
-  const pillars = [
-    { icon: <Building2 className="w-6 h-6" />, title: "Client Obsession", text: "We align to outcomes and embed with your teams." },
-    { icon: <Layers className="w-6 h-6" />, title: "Quality at Speed", text: "Rigor in delivery without compromising timelines." },
-    { icon: <CheckCircle2 className="w-6 h-6" />, title: "Integrity", text: "Transparent, long‑term partnerships above all." },
+  const focus = [
+    "Salesforce",
+    "SAP",
+    "Microsoft",
+    "Oracle",
+    "BI",
+    "Big Data",
+    "Infrastructure",
+    "Cloud",
+    "Development",
+    "Cyber Security",
+    "Pega",
   ];
+
   return (
     <div className="py-16 px-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">About Creo Invent Tech</h1>
-      <p className="text-gray-600 mb-8">We are a global consulting and talent partner helping enterprises modernize platforms and build high‑performing teams.</p>
-      <div className="grid md:grid-cols-3 gap-6">
-        {pillars.map((p) => (
-          <Card key={p.title} className="rounded-2xl">
-            <CardContent className="p-6">
-              <div className="text-blue-600 mb-2">{p.icon}</div>
-              <h3 className="font-semibold">{p.title}</h3>
-              <p className="text-gray-600 mt-1 text-sm">{p.text}</p>
-            </CardContent>
-          </Card>
+      <h1 className="text-3xl font-bold mb-4">About Us</h1>
+
+      <p className="text-gray-700 mb-4">
+        Creo Invent is an IT services corporation serving clients across Europe, India, and South Africa — headquartered in the UK.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6 mb-2">
+        Enterprise Technology Consultant and Recruitment Experts
+      </h2>
+      <p className="text-gray-700 mb-4">
+        We are an enterprise technology consulting and recruitment company with a focus on:
+      </p>
+
+      <ul className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-6 text-gray-800">
+        {focus.map((f) => (
+          <li key={f} className="flex items-center gap-2">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-gray-400" />
+            {f}
+          </li>
         ))}
-      </div>
+      </ul>
+
+      <p className="text-gray-700 mb-4">
+        Our specialist areas include Microsoft, CRM, BI &amp; Big Data, Development, Infrastructure &amp; Cloud, and Cyber Security.
+      </p>
+      <p className="text-gray-700 mb-4">
+        We have developed an unrivaled network and reputation, working with leading experts and companies across the globe. This is thanks to our teams of
+        multi-lingual consultants who understand the culture of each market we operate in. We have headquarters in London.
+      </p>
+      <p className="text-gray-700 mb-4">
+        Whether you are a candidate seeking the best roles in Europe or a client looking for the best enterprise technology professionals, you can expect a
+        market-leading service delivered by passionate, open, and entrepreneurial people. Specialism, quality, and compliance are at the heart of everything
+        we do to establish and nurture long-term relationships with our clients and candidates.
+      </p>
+
+      <h3 className="text-xl font-semibold mt-8 mb-2">Staffing Services</h3>
+      <p className="text-gray-700 mb-4">
+        At Creo, we provide the best staffing services on the planet. Our expert knowledge, coupled with our open, transparent, and entrepreneurial approach
+        has ensured our continuing success in building long-term partnerships with multinational blue-chips, SMEs, and global or specialist IT consultancies.
+        Our highly-experienced recruitment consultants are proficient in their individual technology market, and work with a network of global IT
+        professionals to ensure we always meet our clients’ needs.
+      </p>
+
+      <h3 className="text-xl font-semibold mt-8 mb-2">Pega Services</h3>
+      <p className="text-gray-700">
+        At Creo, we provide the best Pega services and resources. Creo Invent builds innovative, modern, and mobile-enabled apps quickly with Pega’s low-code
+        platform. Our solutions integrate with external systems and provide enterprise-grade security and scalability. Our teams bring deep knowledge of Pega
+        Program Management, Business Analysis, Agile Development, and Data Management.
+      </p>
     </div>
   );
 }
@@ -260,11 +305,16 @@ function Services() {
   const services = [
     { title: "Salesforce Consulting", text: "Implementation, integration, and managed services." },
     { title: "SAP Services", text: "ECC to S/4HANA migration, modules, and support." },
-    { title: "Microsoft Stack", text: "Azure, Dynamics 365, Power Platform, and M365." },
-    { title: "Data & Analytics", text: "Data engineering, BI dashboards, and governance." },
-    { title: "Cloud & DevOps", text: "Architecture, CI/CD, containerization, security." },
-    { title: "Talent Augmentation", text: "On‑demand experts with compliance and speed." },
+    { title: "Microsoft & Azure", text: "Dynamics 365, Power Platform, M365, Azure cloud." },
+    { title: "Oracle", text: "Applications and middleware expertise, integration and support." },
+    { title: "BI & Big Data", text: "Data engineering, analytics, dashboards, governance." },
+    { title: "Infrastructure & Cloud", text: "Architecture, migration, DevOps, security." },
+    { title: "Custom Development", text: "Modern web, mobile, and integration engineering." },
+    { title: "Cyber Security", text: "Advisory, controls, and secure delivery." },
+    { title: "Pega Low-Code", text: "Design, build, and run on Pega’s low-code platform." },
+    { title: "Talent & Recruitment", text: "Specialist staffing across our technology focus." },
   ];
+  
   return (
     <div className="py-16 px-6 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Services</h1>
@@ -286,7 +336,7 @@ function Services() {
 }
 
 function Technologies() {
-  const logos = ["Salesforce", "SAP", "Microsoft", "AWS", "Azure", "GCP", "Snowflake", "Power BI"];
+  const logos = ["Salesforce", "SAP", "Microsoft", "Oracle","Pega","AWS", "Azure", "GCP", "Snowflake", "Power BI"];
   return (
     <div className="py-16 px-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Technologies</h1>
@@ -570,6 +620,10 @@ function Contact() {
             <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7425392138</p>
             <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +27 718755180</p>
             <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7930624958</p>
+          </div>
+          <div className="mt-6 rounded-xl border bg-white p-4">
+            <p className="text-sm font-medium mb-1">Hours</p>
+            <p className="text-sm text-gray-600">Mon–Fri: 09:00 – 17:00 (UK)</p>
           </div>
           <div className="mt-6 rounded-xl border bg-white p-4">
             <p className="text-sm font-medium mb-2">Candidates</p>
