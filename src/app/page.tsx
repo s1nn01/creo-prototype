@@ -51,10 +51,10 @@ function NavBar({ navigate, route }: { navigate: (p: string) => void; route: str
       <Image
         src="/logo.png"
         alt="Creo Invent Tech"
-        width={160}   // larger intrinsic size
-        height={160}
+        width={240}   // larger intrinsic size
+        height={240}
         priority
-        className="h-12 md:h-14 w-auto"   // 48px tall on mobile, 56px on desktop
+        className="h-20 md:h-24 w-auto"   // 48px tall on mobile, 56px on desktop
       />
       </div>
         <nav className="hidden md:flex gap-6">
