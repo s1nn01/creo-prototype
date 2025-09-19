@@ -355,7 +355,7 @@ function Careers({ navigate }: { navigate: (p: string) => void }) {
 
 function TalentTeaser({ navigate }: { navigate: (p: string) => void }) {
   return (
-    <section className="rounded-xl bg-gradient-to-r from-pink-600 via-indigo-600 to-amber-500 text-white p-8 flex flex-col md:flex-row items-center justify-between mb-12">
+    <section className="rounded-xl bg-gradient-to-r from-pink-600 via-indigo-600 to-amber-500 text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between mb-12">
       <div className="mb-4 md:mb-0">
         <h3 className="text-2xl font-bold">Get matched to roles that fit your CV</h3>
         <p className="text-white/90">Join our Talent Network to receive job alerts tailored to your skills and location.</p>
