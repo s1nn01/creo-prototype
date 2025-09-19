@@ -37,8 +37,6 @@ function NavBar({ navigate, route }: { navigate: (p: string) => void; route: str
     { label: "Home", path: "/" },
     { label: "About", path: "/about" },
     { label: "Services", path: "/services" },
-    { label: "Technologies", path: "/technologies" },
-    { label: "Case Studies", path: "/cases" },
     { label: "Careers", path: "/careers" },
     { label: "Talent Network", path: "/talent" },
     { label: "Blog", path: "/blog" },
@@ -379,31 +377,6 @@ function Services() {
   );
 }
 
-function Cases() {
-  const items = [
-    { client: "FinServ Co.", outcome: "+38% lead conversion", blurb: "Migrated CRM to Salesforce with custom CPQ." },
-    { client: "Retail Group", outcome: "-27% time‑to‑hire", blurb: "Built talent pipeline with analytics." },
-    { client: "Manufacturing", outcome: "S/4HANA go‑live", blurb: "Greenfield implementation in 6 months." },
-  ];
-  return (
-    <div className="py-16 px-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Case Studies</h1>
-      <div className="grid md:grid-cols-3 gap-6">
-        {items.map((c) => (
-          <Card key={c.client} className="rounded-2xl">
-            <CardContent className="p-6">
-              <p className="text-sm text-blue-700 font-semibold">{c.outcome}</p>
-              <h3 className="text-lg font-semibold mt-1">{c.client}</h3>
-              <p className="text-gray-600 text-sm mt-2">{c.blurb}</p>
-              <Button className="mt-4" variant="outline">Read more</Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Careers({ navigate }: { navigate: (p: string) => void }) {
   const jobs = [
     { title: "Salesforce Developer", loc: "London, UK", type: "Hybrid" },
@@ -685,8 +658,6 @@ export default function PrototypeApp() {
         return <About />;
       case "/services":
         return <Services />;
-      case "/cases":
-        return <Cases />;
       case "/careers":
         return <Careers navigate={navigate} />;
       case "/talent":
