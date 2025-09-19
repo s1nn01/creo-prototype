@@ -237,7 +237,7 @@ function About() {
     "SAP",
     "Microsoft",
     "Oracle",
-    "BI",
+    "BI & Analytics",
     "Big Data",
     "Infrastructure",
     "Cloud",
@@ -247,59 +247,87 @@ function About() {
   ];
 
   return (
-    <div className="py-16 px-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">About Us</h1>
+    <div className="bg-white">
+      {/* Hero */}
+      <section className="bg-gradient-to-r from-pink-600 via-fuchsia-600 to-amber-500 text-white py-16 px-6 text-center rounded-b-3xl shadow-md">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">About Creo Invent</h1>
+        <p className="text-lg md:text-xl max-w-3xl mx-auto">
+          Global enterprise technology consultants and recruitment experts —
+          connecting talent and innovation across the UK, Europe, India, South Africa, and beyond.
+        </p>
+      </section>
 
-      <p className="text-gray-700 mb-4">
-        Creo Invent is an IT services corporation serving clients across Europe, India, and South Africa — headquartered in the UK.
-      </p>
+      {/* Mission */}
+      <section className="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
+          <p className="text-gray-700 mb-4">
+            We are an enterprise technology consulting and recruitment partner helping organizations modernize platforms and build high-performing teams.
+          </p>
+          <p className="text-gray-700">
+            Our multi-lingual consultants bring unmatched expertise and cultural understanding,
+            enabling us to deliver tailored services in Salesforce, SAP, Microsoft, Oracle, Cloud, Cyber Security, and more.
+          </p>
+        </div>
+        <Image
+          src="/about-team.jpg"
+          alt="Teamwork at Creo Invent"
+          width={600}
+          height={400}
+          className="rounded-2xl shadow-lg object-cover"
+        />
+      </section>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
-        Enterprise Technology Consultant and Recruitment Experts
-      </h2>
-      <p className="text-gray-700 mb-4">
-        We are an enterprise technology consulting and recruitment company with a focus on:
-      </p>
+      {/* Focus Areas */}
+      <section className="py-16 px-6 bg-gray-50">
+        <h2 className="text-3xl font-bold text-center mb-8">Our Focus Areas</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {focus.map((f) => (
+            <span
+              key={f}
+              className="bg-white border rounded-xl px-4 py-3 text-center font-medium shadow hover:shadow-md transition"
+            >
+              {f}
+            </span>
+          ))}
+        </div>
+      </section>
 
-      <ul className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-6 text-gray-800">
-        {focus.map((f) => (
-          <li key={f} className="flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-gray-400" />
-            {f}
-          </li>
-        ))}
-      </ul>
+      {/* Quote highlight */}
+      <section className="py-16 px-6 text-center bg-gradient-to-r from-indigo-700 to-blue-600 text-white">
+        <p className="text-2xl md:text-3xl font-semibold max-w-3xl mx-auto italic">
+          “Specialism, quality, and compliance are at the heart of everything we do to establish and nurture long-term relationships with our clients and candidates.”
+        </p>
+      </section>
 
-      <p className="text-gray-700 mb-4">
-        Our specialist areas include Microsoft, CRM, BI &amp; Big Data, Development, Infrastructure &amp; Cloud, and Cyber Security.
-      </p>
-      <p className="text-gray-700 mb-4">
-        We have developed an unrivaled network and reputation, working with leading experts and companies across the globe. This is thanks to our teams of
-        multi-lingual consultants who understand the culture of each market we operate in. We have headquarters in London.
-      </p>
-      <p className="text-gray-700 mb-4">
-        Whether you are a candidate seeking the best roles in Europe or a client looking for the best enterprise technology professionals, you can expect a
-        market-leading service delivered by passionate, open, and entrepreneurial people. Specialism, quality, and compliance are at the heart of everything
-        we do to establish and nurture long-term relationships with our clients and candidates.
-      </p>
-
-      <h3 className="text-xl font-semibold mt-8 mb-2">Staffing Services</h3>
-      <p className="text-gray-700 mb-4">
-        At Creo, we provide the best staffing services on the planet. Our expert knowledge, coupled with our open, transparent, and entrepreneurial approach
-        has ensured our continuing success in building long-term partnerships with multinational blue-chips, SMEs, and global or specialist IT consultancies.
-        Our highly-experienced recruitment consultants are proficient in their individual technology market, and work with a network of global IT
-        professionals to ensure we always meet our clients’ needs.
-      </p>
-
-      <h3 className="text-xl font-semibold mt-8 mb-2">Pega Services</h3>
-      <p className="text-gray-700">
-        At Creo, we provide the best Pega services and resources. Creo Invent builds innovative, modern, and mobile-enabled apps quickly with Pega’s low-code
-        platform. Our solutions integrate with external systems and provide enterprise-grade security and scalability. Our teams bring deep knowledge of Pega
-        Program Management, Business Analysis, Agile Development, and Data Management.
-      </p>
+      {/* Global Presence */}
+      <section className="py-16 px-6 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-center">Global Presence</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="border rounded-xl p-6 bg-white shadow">
+            <h3 className="font-semibold mb-2">United Kingdom (HQ)</h3>
+            <p className="text-gray-700">306 E Harrow View, Harrow, Middlesex, London, HA2 6QQ</p>
+            <p className="text-gray-700 mt-1">78 Queens Road, Watford, Hertfordshire, WD17 2LA</p>
+          </div>
+          <div className="border rounded-xl p-6 bg-white shadow">
+            <h3 className="font-semibold mb-2">India</h3>
+            <p className="text-gray-700">102, 6th Main, Sir M V Nagar, Bangalore, Karnataka, 560016</p>
+          </div>
+          <div className="border rounded-xl p-6 bg-white shadow">
+            <h3 className="font-semibold mb-2">South Africa</h3>
+            <p className="text-gray-700">209 Ben Even, Elizabeth Street, Parkmore, Sandton 2195</p>
+            <p className="text-gray-700 mt-1">55 Bangalore Mews, Naivasha Road, Sunninghill, Sandton 2191</p>
+          </div>
+          <div className="border rounded-xl p-6 bg-white shadow">
+            <h3 className="font-semibold mb-2">United States</h3>
+            <p className="text-gray-700">Creo Invent LLC, 30N Gould St STE R, Sheridan, WY 82801</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
+
 
 function Services() {
   const services = [
