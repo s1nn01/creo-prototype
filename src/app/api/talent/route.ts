@@ -1,6 +1,6 @@
 // src/app/api/talent/route.ts
 import type { NextRequest } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,62 +24,39 @@ export async function POST(req: NextRequest) {
     if (!(cvField instanceof File)) {
       return new Response(JSON.stringify({ message: "CV file is required" }), { status: 400 });
     }
+    const cvBuffer = Buffer.from(await (cvField as File).arrayBuffer());
 
-    const cvBuffer = Buffer.from(await cvField.arrayBuffer());
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const from = process.env.FROM_EMAIL || "onboarding@resend.dev";
+    const to = process.env.TO_EMAIL || "chandras@creoinvent-tech.com";
 
-    const host = process.env.SMTP_HOST!;
-    const port = Number(process.env.SMTP_PORT || "587"); // default to 587 (STARTTLS)
-    const user = process.env.SMTP_USER!;
-    const pass = process.env.SMTP_PASS!;
-    const from = (process.env.FROM_EMAIL || user)!;
+    const html = `
+      <h3>New Talent Network Submission</h3>
+      <p><b>Name:</b> ${firstName} ${lastName}</p>
+      <p><b>Email:</b> ${email}</p>
+      <p><b>Location:</b> ${location}</p>
+      <p><b>Role:</b> ${role}</p>
+      <p><b>Experience:</b> ${experience}</p>
+      <p><b>Employment Type:</b> ${employmentType} &nbsp; <b>Work Mode:</b> ${workMode} &nbsp; <b>Seniority:</b> ${seniority}</p>
+      <p><b>Skills:</b> ${skills}</p>
+    `;
 
-    // ✅ secure must be TRUE only for 465, FALSE for 587
-    const useSecure = port === 465;
-
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure: useSecure,          // SSL for 465; STARTTLS for 587
-      auth: { user, pass },
-      requireTLS: !useSecure,     // enforce STARTTLS when not using SSL
-      connectionTimeout: 15000,   // 15s safety timeouts
-      greetingTimeout: 15000,
-      socketTimeout: 20000,
-      tls: {
-        rejectUnauthorized: false // helps with some GoDaddy cert quirks
-      },
-    });
-
-    const text = `
-New Talent Network submission
-
-Name: ${firstName} ${lastName}
-Email: ${email}
-Location: ${location}
-Primary Role: ${role}
-Experience: ${experience}
-Skills: ${skills}
-Employment Type: ${employmentType}
-Work Mode: ${workMode}
-Seniority: ${seniority}
-`.trim();
-
-    const info = await transporter.sendMail({
-      from: `"Creo Website" <${from}>`,
-      to: process.env.TO_EMAIL || "chandras@creoinvent-tech.com",
-      replyTo: email || undefined,
+    const { data, error } = await resend.emails.send({
+      from: `Creo Website <${from}>`,
+      to,
+      reply_to: email || undefined,
       subject: `New CV submission: ${firstName} ${lastName} (${role || "Talent Network"})`,
-      text,
+      html,
       attachments: [
         {
-          filename: cvField.name || "cv",
-          content: cvBuffer,
-          contentType: cvField.type || "application/octet-stream",
+          filename: (cvField as File).name || "cv",
+          content: cvBuffer.toString("base64"),
         },
       ],
     });
 
-    return new Response(JSON.stringify({ ok: true, id: info.messageId }), { status: 200 });
+    if (error) throw new Error(error.message);
+    return new Response(JSON.stringify({ ok: true, id: data?.id }), { status: 200 });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Internal error";
     console.error("Talent POST error:", err);
