@@ -41,22 +41,28 @@ Work Mode: ${workMode}
 Seniority: ${seniority}
 `.trim();
 
+    // --- Transporter setup ---
+    const host = process.env.SMTP_HOST!;
+    const port = Number(process.env.SMTP_PORT || "465");
+    const user = process.env.SMTP_USER!;
+    const pass = process.env.SMTP_PASS!;
+    const from = (process.env.FROM_EMAIL || user)!; // visible "From"
+
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST!,
-      port: Number(process.env.SMTP_PORT || 587),
-      secure: String(process.env.SMTP_SECURE || "false") === "true",
-      auth: {
-        user: process.env.SMTP_USER!,
-        pass: process.env.SMTP_PASS!,
-      },
+      host,
+      port,
+      secure: port === 465, // SSL for 465, TLS for 587
+      auth: { user, pass },
+      tls: { rejectUnauthorized: false }, // helps with GoDaddy/Office365
     });
 
+    // --- Send email ---
     await transporter.sendMail({
-      from: process.env.FROM_EMAIL || process.env.SMTP_USER,
+      from: `"Creo Website" <${from}>`, // should show as noreply@creoinvent-tech.com
       to: process.env.TO_EMAIL || "chandras@creoinvent-tech.com",
+      replyTo: email || undefined, // replies go to candidate
       subject: `New CV submission: ${firstName} ${lastName} (${role || "Talent Network"})`,
       text,
-      replyTo: email,
       attachments: [
         {
           filename: cvField.name || "cv",
