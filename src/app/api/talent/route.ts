@@ -43,7 +43,7 @@ Seniority: ${seniority}
 
     // --- Transporter setup ---
     const host = process.env.SMTP_HOST!;
-    const port = Number(process.env.SMTP_PORT || "465");
+    const port = Number(process.env.SMTP_PORT || "587");
     const user = process.env.SMTP_USER!;
     const pass = process.env.SMTP_PASS!;
     const from = (process.env.FROM_EMAIL || user)!; // visible "From"
@@ -51,7 +51,10 @@ Seniority: ${seniority}
     const transporter = nodemailer.createTransport({
       host,
       port,
-      secure: port === 465, // SSL for 465, TLS for 587
+      secure: port === 587, // SSL for 465, TLS for 587
+      requireTLS: true,     // enforce TLS upgrade
+      connectionTimeout: 10000, // 10s
+      greetingTimeout: 10000,
       auth: { user, pass },
       tls: { rejectUnauthorized: false }, // helps with GoDaddy/Office365
     });
