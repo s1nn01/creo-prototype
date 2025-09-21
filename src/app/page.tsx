@@ -602,36 +602,95 @@ function Blog() {
 }
 
 function Contact() {
+  const [loading, setLoading] = useState(false);
+  const [ok, setOk] = useState(false);
+  const [error, setError] = useState<string>("");
+
+  async function submitContact(e: React.FormEvent<HTMLFormElement>, kind: "hire" | "callback") {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    setOk(false);
+
+    try {
+      const form = e.currentTarget;
+      const fd = new FormData(form);
+      fd.set("kind", kind);
+
+      const res = await fetch("/api/contact", { method: "POST", body: fd });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) throw new Error(data?.message || "Submission failed. Please try again.");
+      setOk(true);
+      form.reset();
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="py-16 px-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="space-y-4">
-          <Input placeholder="Your name" />
-          <Input placeholder="Company" />
-          <Input type="email" placeholder="Work email" />
-          <Input placeholder="Phone (optional)" />
-          <Textarea placeholder="How can we help?" />
-          <Button className="w-full"><PhoneCall className="mr-2 w-4 h-4"/> Request a callback</Button>
-        </div>
+        <form
+          className="space-y-4"
+          onSubmit={(e) => submitContact(e, "callback")}  // default action = callback
+        >
+          <Input name="name" placeholder="Your name" required />
+          <Input name="company" placeholder="Company" />
+          <Input name="email" type="email" placeholder="Work email" required />
+          <Input name="phone" placeholder="Phone (optional)" />
+          <Textarea name="message" placeholder="How can we help?" required />
+
+          {/* Buttons: one submits as 'callback', the other as 'hire' */}
+          <div className="flex gap-3">
+            <Button type="submit" disabled={loading}>
+              <PhoneCall className="mr-2 w-4 h-4" />
+              {loading ? "Sending..." : "Request a callback"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={loading}
+              onClick={(e) => submitContact(e as any, "hire")}
+            >
+              Hire Talent
+            </Button>
+          </div>
+
+          {ok && <p className="text-green-600 text-sm">Thanks! We’ve received your message.</p>}
+          {error && <p className="text-red-600 text-sm">{error}</p>}
+        </form>
+
         <div className="rounded-2xl border p-6 bg-gray-50">
           <h3 className="font-semibold mb-2">Global Offices</h3>
           <p className="text-sm text-gray-700">UK • India • South Africa • USA</p>
           <div className="mt-4 space-y-2 text-sm text-gray-600">
-            <p className="flex items-center gap-2"><Mail className="w-4 h-4"/> chandras@creoinvent-tech.com</p>
-            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7425392138</p>
-            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +27 718755180</p>
-            <p className="flex items-center gap-2"><Phone className="w-4 h-4"/> +44 7930624958</p>
+            <p className="flex items-center gap-2"><Mail className="w-4 h-4" /> chandras@creoinvent-tech.com</p>
+            <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +44 7425392138</p>
+            <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +27 718755180</p>
+            <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +44 7930624958</p>
           </div>
+
           <div className="mt-6 rounded-xl border bg-white p-4">
             <p className="text-sm font-medium mb-1">Hours</p>
             <p className="text-sm text-gray-600">Mon–Fri: 09:00 – 17:00 (UK)</p>
           </div>
+
           <div className="mt-6 rounded-xl border bg-white p-4">
             <p className="text-sm font-medium mb-2">Candidates</p>
-            <p className="text-sm text-gray-600 mb-3">Want to be notified about roles? Join our Talent Network.</p>
-            <Button variant="outline" onClick={() => window.dispatchEvent(new CustomEvent("navigate", { detail: "/talent" }))}>
-              <Bell className="mr-2 w-4 h-4"/> Get Job Alerts
+            <p className="text-sm text-gray-600 mb-3">
+              Want to be notified about roles? Join our Talent Network.
+            </p>
+            <Button
+              variant="outline"
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent("navigate", { detail: "/talent" }))
+              }
+            >
+              <Bell className="mr-2 w-4 h-4" /> Get Job Alerts
             </Button>
           </div>
         </div>
@@ -639,6 +698,7 @@ function Contact() {
     </div>
   );
 }
+
 
 export default function PrototypeApp() {
   const { route, navigate } = useRouter();
