@@ -1,6 +1,6 @@
 // src/app/api/talent/route.ts
 import type { NextRequest } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,11 +24,62 @@ export async function POST(req: NextRequest) {
     if (!(cvField instanceof File)) {
       return new Response(JSON.stringify({ message: "CV file is required" }), { status: 400 });
     }
+
+    // Basic file guardrails
+    const allowed =
+      ["application/pdf",
+       "application/msword",
+       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+    if (cvField.size > 5 * 1024 * 1024) {
+      return new Response(JSON.stringify({ message: "File too large (max 5MB)" }), { status: 400 });
+    }
+    if (cvField.type && !allowed.includes(cvField.type)) {
+      return new Response(JSON.stringify({ message: "Only PDF/DOC/DOCX are allowed" }), { status: 400 });
+    }
+
     const cvBuffer = Buffer.from(await (cvField as File).arrayBuffer());
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const from = process.env.FROM_EMAIL || "onboarding@resend.dev";
-    const to = process.env.TO_EMAIL || "chandras@creoinvent-tech.com";
+    // ---- Office 365 transporter (SMTP AUTH on 587 with STARTTLS) ----
+    const host = process.env.SMTP_HOST || "smtp.office365.com";
+    const port = Number(process.env.SMTP_PORT || "587");
+    const user = process.env.SMTP_USER!;
+    const pass = process.env.SMTP_PASS!;
+    const fromEmail = (process.env.FROM_EMAIL || user)!;
+    const toEmail = process.env.TO_EMAIL || "chandras@creoinvent-tech.com";
+
+    if (!user || !pass) {
+      return new Response(
+        JSON.stringify({ message: "SMTP credentials missing (SMTP_USER / SMTP_PASS)" }),
+        { status: 500 }
+      );
+    }
+
+    const transporter = nodemailer.createTransport({
+      host,
+      port,               // 587
+      secure: false,      // NOT SSL on connect
+      requireTLS: true,   // upgrade to TLS (STARTTLS)
+      auth: { user, pass },
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+      socketTimeout: 20000,
+    });
+
+    const subject = `New CV submission: ${firstName} ${lastName} (${role || "Talent Network"})`;
+
+    const text = `
+New Talent Network submission
+
+Name: ${firstName} ${lastName}
+Email: ${email}
+Location: ${location}
+Primary Role: ${role}
+Experience: ${experience}
+Skills: ${skills}
+Employment Type: ${employmentType}
+Work Mode: ${workMode}
+Seniority: ${seniority}
+`.trim();
 
     const html = `
       <h3>New Talent Network Submission</h3>
@@ -41,22 +92,23 @@ export async function POST(req: NextRequest) {
       <p><b>Skills:</b> ${skills}</p>
     `;
 
-    const { data, error } = await resend.emails.send({
-      from: `Creo Website <${from}>`,
-      to,
-      reply_to: email || undefined,
-      subject: `New CV submission: ${firstName} ${lastName} (${role || "Talent Network"})`,
+    const info = await transporter.sendMail({
+      from: `"Creo Website" <${fromEmail}>`,
+      to: toEmail,
+      replyTo: email || undefined, // replies go to candidate
+      subject,
+      text,
       html,
       attachments: [
         {
           filename: (cvField as File).name || "cv",
-          content: cvBuffer.toString("base64"),
+          content: cvBuffer,
+          contentType: (cvField as File).type || "application/octet-stream",
         },
       ],
     });
 
-    if (error) throw new Error(error.message);
-    return new Response(JSON.stringify({ ok: true, id: data?.id }), { status: 200 });
+    return new Response(JSON.stringify({ ok: true, id: info.messageId }), { status: 200 });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Internal error";
     console.error("Talent POST error:", err);
